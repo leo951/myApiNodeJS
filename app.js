@@ -1,11 +1,17 @@
-const express =  require ('express') 
-const app =  express() 
-const port =  3000
+// Créer un dossier mockup -> users.json(avec 3 users)
+// Email, firstname, Lastname
+// Créer route users accessible en get
+// Afficher les json en localhost
 
-app . get ('/', (req, res)  => { 
-  res.send( 'Hello World!' ) 
-})
+    // const users = require('./src/mockup/users.json');
+    // app.get('/users', (req,res) => {
+    //   res.send(users);
+    // });
+// Possibilité de faire get/post/put/delete (app.post, app.put, etc)
 
-app.listen (port, () => { 
-  console.log(`Exemple d'application écoutant sur : http://localhost: ${ port }`) 
-})
+//faire redirection express.service lance le serveur
+const app = require('./src/services/express.service');
+const mongoose = require('./src/services/mongoose.service')
+
+mongoose.connectDb();
+app.start();
