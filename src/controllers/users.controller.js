@@ -8,14 +8,14 @@ exports.create = (req, res) => {
         lastname: req.body.lastname,
         email: req.body.email,
         password: req.body.email
-    })
+    });
 
-    user.save()
-    then((data) => {
+    user.save() //post pour article myMondel.find
+    .then((data) => {
         res.send({
             user: data,
             created: true
-        })
+        });
     })
     .catch((err) => {
         console.log(err);
