@@ -39,3 +39,16 @@ exports.getAllProduct = (req, res) => {
             })
         })
 }
+
+exports.getProduct = (req, res) => {
+    Product.findById(req.params.id)
+    .then((data) => {
+        if (!data) {
+            res.status(404).send({
+                message:`Votre Product id ${req.params.id} n'a pas été trouvé`
+            })
+        }
+        res.send(data)
+    })
+    .catch((err) => res.send(err));
+}
