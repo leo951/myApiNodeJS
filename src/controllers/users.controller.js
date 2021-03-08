@@ -1,9 +1,12 @@
 const User = require('../models/user.model');
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const Joi = require('joi');
+
 //req = requete, res = response
 //Creation de user
 exports.create = (req, res) => {
+
     let hasedPassword = bcrypt.hashSync(req.body.password, 10);
 
     const user = new User({
