@@ -4,9 +4,9 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "dev": "nodemon --exec babel-node app.js",
+    "dev": "nodemon --exec babel-node ./src/app.js",
     "build": "babel -d ./build ./src",
-    "start": "node app.js",
+    "start": "npm run build && node ./build/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Léo Peyré",
