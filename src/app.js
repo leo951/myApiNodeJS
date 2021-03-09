@@ -10,8 +10,8 @@
 // Possibilité de faire get/post/put/delete (app.post, app.put, etc)
 
 //faire redirection express.service lance le serveur
-const app = require('./src/services/express.service');
-const mongoose = require('./src/services/mongoose.service')
+const app = require('./services/express.service');
+const mongoose = require('./services/mongoose.service')
 
 
 mongoose.connectDb();

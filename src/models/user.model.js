@@ -22,6 +22,7 @@ const userSchema = new Schema({
         require: true,
         minlenght: 4,
         unique: true
-    }
+    },
+	orders: [{ type: Schema.Types.ObjectId, ref: 'Order' }],
 })
 module.exports = mongoose.model('User', userSchema);
