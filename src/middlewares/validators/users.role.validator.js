@@ -9,18 +9,18 @@ const userRoleValidation = (req,res,next) =>{
         email: Joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com', 'fr'] } }),
         password: Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')),
         // autre pattern pour une majuscule minimum = ^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[ -/:-@\[-`{​​​​​-~]).{​​​​​6,64}​​​​​$
-        isAdmin: Joi.boolean()
+        isAdmin: true
     });
     
         const validation =  userRoleValidationSchema.validate(req.body); 
 
-        if (validation.isAdmin = true) {
-            next()
-        } else{
+        if (validation.error) {
             res.json({
                 success: 0,
                 message: validation.error.details[0].message
             })
+        } else{
+            next()
         }
 };
 module.exports = userRoleValidation;
