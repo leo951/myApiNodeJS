@@ -8,9 +8,12 @@ const addUserValidation = require('../middlewares/validators/users.validator');
 const addUserRoleValidation = require('../middlewares/validators/users.role.validator')
 
 router.post('/users', addUserValidation, user.create);
-router.post('/users/admin', addUserRoleValidation, user.create) 
+router.post('/users/admin', addUserRoleValidation, user.createAdmin) 
 router.post('/users/login', user.login);
 router.post('/users/loginAdmin', addUserRoleValidation, user.login);
+
+router.post('/users/update/:id', user.modifyUser);
+router.get('/users/delete/:id', user.deleteUser);
 
 //import du middleware pour la verification de token
 router.get('/users/:id', verifyToken, user.findOne);

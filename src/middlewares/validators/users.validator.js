@@ -9,7 +9,7 @@ const userValidation = (req,res,next) =>{
         email: Joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com', 'fr'] } }),
         password: Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')),
         // autre pattern pour une majuscule minimum = ^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[ -/:-@\[-`{​​​​​-~]).{​​​​​6,64}​​​​​$
-        role: Joi.boolean()
+        isAdmin: true
     });
     
         const validation =  userValidationSchema.validate(req.body); 

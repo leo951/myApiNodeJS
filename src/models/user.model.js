@@ -14,6 +14,9 @@ const userSchema = new Schema({
         require: true,
         lowercase: true
     },
+    phone:{
+        type: Number,
+    },
     email: {
         type: String,
         require: true,

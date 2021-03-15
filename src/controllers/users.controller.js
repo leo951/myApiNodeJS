@@ -91,17 +91,102 @@ exports.findOne = (req, res) => {
 };
 
 																// Partie Admin
-exports.loginAdmin = (req, res) => {
-	User.findOne({
-		isAdmin: req.body.isAdmin
-	})
-		.populate('orders')
+// exports.loginAdmin = (req, res) => {
+// 	User.findOne({
+// 		isAdmin: req.body.isAdmin
+// 	})
+// 		.populate('orders')
+// 		.then((data) => {
+// 			let userAdminToken = jwt.sign({ isAdmin: data.isAdmin }, 'supersecret', { expiresIn: 86400 });
+// 			res.send({
+// 				auth: true,
+// 				token: userAdminToken
+// 			});
+// 		})
+// 		.catch((err) => res.send(err));
+// };
+
+exports.createAdmin = (req, res) => {
+	let hasedPassword = bcrypt.hashSync(req.body.password, 10);
+
+	const user = new User({
+		firstname: req.body.firstname,
+		lastname: req.body.lastname,
+		email: req.body.email,
+		password: hasedPassword,
+		isAdmin: true || false
+	});
+
+	user
+		.save() //post pour article myMondel.find
 		.then((data) => {
-			let userAdminToken = jwt.sign({ isAdmin: data.isAdmin }, 'supersecret', { expiresIn: 86400 });
+			let userToken = jwt.sign(
+				{
+					id: data._id,
+					isAdmin: data.isAdmin,
+					auth: true
+				},
+				'supersecret',
+				{
+					expiresIn: 86400
+				}
+			);
 			res.send({
-				auth: true,
-				token: userAdminToken
+				token: userToken,
+				auth: true
+				// user: data,
+				// created: true
 			});
 		})
-		.catch((err) => res.send(err));
+		.catch((err) => {
+			console.log(err);
+			res.status(500).send({
+				error: 500,
+				message: err.message || 'Vous avez une erreur'
+			});
+		});
 };
+
+exports.modifyUser = (req, res, next) => {
+    const user = new User({
+      _id: req.params.id,
+      lastname: req.body.lastName,
+      firstname: req.body.firstName,
+      phone: req.body.phone,
+      email: req.body.email,
+      password: req.body.password,
+      isAdmin: req.body.IsAdmin,
+    });
+    User.updateOne({_id: req.params.id}, user)
+	.then(
+      () => {
+        res.status(201).json({
+          message: 'User updated successfully!'
+        });
+      }
+    )
+	.catch(
+      (error) => {
+        res.status(400).json({
+          error: error
+        });
+      }
+    );
+  
+};
+
+exports.deleteUser = (req, res, next) => {
+  User.deleteOne({_id: req.params.id}).then(
+    () => {
+      res.status(200).json({
+        message: ' User deleted successfully!'
+      });
+    }
+  ).catch(
+    (error) => {
+      res.status(400).json({
+        error: error
+      });
+    }
+  );
+}
