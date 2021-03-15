@@ -2,6 +2,7 @@ const User = require('../models/user.model');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const Joi = require('joi');
+const { boolean } = require('joi');
 
 //req = requete, res = response
 //Creation de user
@@ -12,7 +13,8 @@ exports.create = (req, res) => {
 		firstname: req.body.firstname,
 		lastname: req.body.lastname,
 		email: req.body.email,
-		password: hasedPassword
+		password: hasedPassword,
+		isAdmin: true | false
 	});
 
 	user
@@ -21,6 +23,7 @@ exports.create = (req, res) => {
 			let userToken = jwt.sign(
 				{
 					id: data._id,
+					isAdmin: data.isAdmin,
 					auth: true
 				},
 				'supersecret',
@@ -83,6 +86,22 @@ exports.findOne = (req, res) => {
 				});
 			}
 			res.send(data);
+		})
+		.catch((err) => res.send(err));
+};
+
+																// Partie Admin
+exports.loginAdmin = (req, res) => {
+	User.findOne({
+		isAdmin: req.body.isAdmin
+	})
+		.populate('orders')
+		.then((data) => {
+			let userAdminToken = jwt.sign({ isAdmin: data.isAdmin }, 'supersecret', { expiresIn: 86400 });
+			res.send({
+				auth: true,
+				token: userAdminToken
+			});
 		})
 		.catch((err) => res.send(err));
 };

@@ -1,5 +1,7 @@
+const { boolean } = require('joi');
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+
 
 const userSchema = new Schema({
     lastname: {
@@ -23,6 +25,26 @@ const userSchema = new Schema({
         minlenght: 4,
         unique: true
     },
+    isAdmin: {
+        type: Boolean
+    },
+    adress: [
+        {
+            fullAddress: {
+                type: String
+            },
+            postalCode: {
+                type: Number
+            },
+            city: {
+                type: String
+            },
+            country: {
+                type: String
+            }
+        }
+    ],
+
 	orders: [{ type: Schema.Types.ObjectId, ref: 'Order' }],
 })
 module.exports = mongoose.model('User', userSchema);
