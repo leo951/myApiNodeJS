@@ -26,6 +26,7 @@ function verifyAdminToken(req, res, next) {
                 message:"not admin"
             })
         }
+        console.log(decoded);
         next();
     })
 }

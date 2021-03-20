@@ -7,5 +7,6 @@ const { populate } = require('../models/order.model');
 router.post('/orders', order.create);
 router.get('/orders/:id', order.getOrder);
 router.get('/orders', order.getOrders);
+router.post('/order/modify', order.modifyOrder)
 
 module.exports = router; 

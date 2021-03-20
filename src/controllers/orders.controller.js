@@ -60,3 +60,25 @@ exports.getOrders = (req, res) => {
 			});
 		});
 };
+
+exports.modifyOrder = (req, res, next) => {
+    const order = new Order({
+     status: req.body.status
+        });
+    Order.updateOne({_id: req.params.id}, order)
+    .then(
+      (data) => {
+        res.status(201).json({
+          message: 'Status updated successfully!',
+          order: data
+        });
+      }
+    )
+    .catch(
+      (error) => {
+        res.status(400).json({
+          error: error
+        });
+      }
+    );
+};

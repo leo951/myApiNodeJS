@@ -10,7 +10,7 @@ const addUserRoleValidation = require('../middlewares/validators/users.role.vali
 router.post('/users', addUserValidation, user.create);
 router.post('/users/admin', addUserRoleValidation, user.createAdmin) 
 router.post('/users/login', user.login);
-router.post('/users/loginAdmin', addUserRoleValidation, user.login);
+router.post('/users/loginAdmin', user.loginAdmin);
 
 router.post('/users/update/:id', user.modifyUser);
 router.get('/users/delete/:id', user.deleteUser);

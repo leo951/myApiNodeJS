@@ -14,7 +14,7 @@ exports.create = (req, res) => {
 		lastname: req.body.lastname,
 		email: req.body.email,
 		password: hasedPassword,
-		isAdmin: true || false
+		isAdmin:  false
 	});
 
 	user
@@ -91,20 +91,37 @@ exports.findOne = (req, res) => {
 };
 
 																// Partie Admin
-// exports.loginAdmin = (req, res) => {
-// 	User.findOne({
-// 		isAdmin: req.body.isAdmin
-// 	})
-// 		.populate('orders')
-// 		.then((data) => {
-// 			let userAdminToken = jwt.sign({ isAdmin: data.isAdmin }, 'supersecret', { expiresIn: 86400 });
-// 			res.send({
-// 				auth: true,
-// 				token: userAdminToken
-// 			});
-// 		})
-// 		.catch((err) => res.send(err));
-// };
+exports.loginAdmin = (req, res) => {
+	User.findOne({
+		email: req.body.email
+	})
+		.populate('orders')
+		.then((data) => {
+			if (!data) {
+				return res.status(404).send({
+					auth: false,
+					token: null,
+					message: `Pas de email ${req.body.email}`
+				});
+			}
+			let passwordIsValid = bcrypt.compareSync(req.body.password, data.password);
+
+			if (!passwordIsValid) {
+				return res.status(401).send({
+					auth: false,
+					token: null,
+					message: 'passwrd in not valid'
+				});
+			}
+			let userAdminToken = jwt.sign({ id: data._id }
+				, 'supersecret', { expiresIn: 86400 });
+			res.send({
+				auth: true,
+				token: userAdminToken
+			});
+		})
+	.catch((err) => res.send(err));
+};
 
 exports.createAdmin = (req, res) => {
 	let hasedPassword = bcrypt.hashSync(req.body.password, 10);
@@ -114,13 +131,13 @@ exports.createAdmin = (req, res) => {
 		lastname: req.body.lastname,
 		email: req.body.email,
 		password: hasedPassword,
-		isAdmin: true || false
+		isAdmin: true 
 	});
 
 	user
 		.save() //post pour article myMondel.find
 		.then((data) => {
-			let userToken = jwt.sign(
+			let userAdminToken = jwt.sign(
 				{
 					id: data._id,
 					isAdmin: data.isAdmin,
@@ -132,7 +149,7 @@ exports.createAdmin = (req, res) => {
 				}
 			);
 			res.send({
-				token: userToken,
+				token: userAdminToken,
 				auth: true
 				// user: data,
 				// created: true
