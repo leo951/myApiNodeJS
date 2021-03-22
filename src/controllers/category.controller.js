@@ -26,11 +26,11 @@ exports.create = (req, res) => {
 }
 exports.getCategoryProduct = (req, res) => {
     Category.find({
-      category: req.params.title
+      _id: req.params.id
     })
     .then(
-      (Category) => {
-        res.status(200).json(Category);
+      (category) => {
+        res.status(200).json(category);
       }
     ).catch(
       (error) => {
@@ -40,3 +40,18 @@ exports.getCategoryProduct = (req, res) => {
       }
     );
   };
+
+  exports.getAllCategory = (req, res) => {
+    Category.find()
+    .then(
+      (category) => {
+        res.status(200).json(category);
+      }
+    ).catch(
+      (error) => {
+        res.status(400).json({
+          error: error
+        });
+      }
+    );
+};

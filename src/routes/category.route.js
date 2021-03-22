@@ -9,7 +9,11 @@ const verifyAdminToken = require('../middlewares/verifyAdminToken')
 // router.post('/products',addUserRoleValidation, product.create);
 //Sans authorisation
 router.post('/category', category.create);
-router.get('/products/:title', category.getCategoryProduct);
+router.get('/category/all', category.getAllCategory);
+//Paramettre toujour a la fin
+router.get('/category/:id', category.getCategoryProduct);
+
+
 
 
 module.exports = router; 
