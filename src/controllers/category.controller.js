@@ -5,16 +5,29 @@ const jwt = require('jsonwebtoken');
 const Joi = require('joi');
 const { boolean } = require('joi');
 
+const Product = require('../models/product.model');
+
+
 exports.create = (req, res) => {
     const category = new Category({
-        title: req.body.title
+        title: req.body.title,
+        product: req.body.product
     });
-    category.save()
+    category
+    .save()
     .then((data) => {
-        res.send({
-            category: data,
-            created: true
-        })
+      Product.findByIdAndUpdate(req.body.product, { category: data._id })
+      .then(() => {
+				res
+					.send({
+						data: data
+					})
+					.catch((err) => res.send(err));
+			});
+			res.send({
+				category: data,
+				created: true
+			});
     })
     .catch((err) => {
         console.log(err.message);    
@@ -25,14 +38,18 @@ exports.create = (req, res) => {
     })
 }
 exports.getCategoryProduct = (req, res) => {
-    Category.find({
-      _id: req.params.id
-    })
-    .then(
-      (category) => {
-        res.status(200).json(category);
+    Category.findById(req.params.id)
+    .populate('products')
+    .then((data) => {
+      if (!data) {
+        res.status(404).send({
+					message: `Votre Category id ${req.params.id} n'a pas été trouvé`
+				});
       }
-    ).catch(
+      res.send(data)
+        // res.status(200).json(category);
+      })
+      .catch(
       (error) => {
         res.status(400).json({
           error: error
@@ -54,4 +71,28 @@ exports.getCategoryProduct = (req, res) => {
         });
       }
     );
+};
+
+exports.modifyCategory = (req, res, next) => {
+  const category = new Category({
+    _id: req.params.id,
+    title: req.body.title,
+    product: req.body.product
+      });
+  Category.updateOne({_id: req.params.id}, category)
+  .then(
+    (data) => {
+      res.status(201).json({
+        message: 'Category updated successfully!',
+        category: data
+      });
+    }
+  )
+  .catch(
+    (error) => {
+      res.status(400).json({
+        error: error
+      });
+    }
+  );
 };

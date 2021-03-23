@@ -5,6 +5,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const Joi = require('joi');
 const { boolean } = require('joi');
+const { populate } = require('../models/product.model');
 
 exports.create = (req, res) => {
     const product = new Product({
@@ -17,10 +18,17 @@ exports.create = (req, res) => {
 
     product.save()
     .then((data) => {
-        res.send({
-            product: data,
-            created: true
-        })
+      Category.findByIdAndUpdate(req.body.category, { $push: {product:data._id } })
+      .then(() => {
+				res.send({
+						data: data
+					})
+					.catch((err) => res.send(err));
+			});
+			res.send({
+				product: data,
+				created: true
+			});
     })
     .catch((err) => {
         console.log(err.message);    
@@ -35,6 +43,7 @@ exports.create = (req, res) => {
 
 exports.getAllProduct = (req, res) => {
     Product.find()
+    .populate('category')
     .then(
       (Products) => {
         res.status(200).json(Products);
@@ -69,6 +78,7 @@ exports.getAllProduct = (req, res) => {
 exports.getProduct = (req, res) => {
   Product.findOne({
     _id: req.params.id
+    .populate('category')
   }).then(
     (product) => {
       res.status(200).json(product);
