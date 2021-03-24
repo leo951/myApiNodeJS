@@ -9,7 +9,6 @@ const productSchema = new Schema({
     },
     description: {
         type: String,
-        require: false,
     },
     imageUrl: {
         type: String,
@@ -20,8 +19,10 @@ const productSchema = new Schema({
         require: true,
         lowercase: true
     },
-    category:[
-        { type: Schema.Types.ObjectId, ref: 'Category' }]
+    category: [
+        { type: Schema.Types.ObjectId, ref: 'Category' }
+    ],
+    require: true
 })
 
 module.exports = mongoose.model('Product', productSchema);

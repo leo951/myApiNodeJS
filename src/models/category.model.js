@@ -8,7 +8,7 @@ const CategorySchema = new Schema({
         lowercase: true
     },
     product:[{ 
-        type: Schema.Types.ObjectId, ref: 'Product' 
+        type: Schema.Types.ObjectId, ref: 'Product'
     }]
 });
 module.exports = mongoose.model('Category', CategorySchema);
