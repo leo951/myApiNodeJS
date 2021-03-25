@@ -1,11 +1,10 @@
-
-const Product = require('../models/product.model');
 const Category = require('../models/category.model');
+const Product = require('../models/product.model');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const Joi = require('joi');
 const { boolean } = require('joi');
-const { populate } = require('../models/product.model');
+// const { populate } = require('../models/product.model');
 
 exports.create = (req, res) => {
     const product = new Product({
