@@ -77,7 +77,7 @@ exports.getAllProduct = (req, res) => {
 exports.getProduct = (req, res) => {
   Product.findOne({
     _id: req.params.id
-    .populate('category')
+    // .populate('category')
   }).then(
     (product) => {
       res.status(200).json(product);

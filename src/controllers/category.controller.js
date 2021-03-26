@@ -47,6 +47,7 @@ exports.getCategoryProduct = (req, res) => {
 				});
       }
       res.send(data)
+      console.log("Je suis data = "+category.product.title)
         // res.status(200).json(category);
       })
       .catch(
