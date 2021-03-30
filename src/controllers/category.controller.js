@@ -42,21 +42,19 @@ exports.getCategoryProduct = (req, res) => {
     .populate('products')
     .then((data) => {
       if (!data) {
-        res.status(404).send({
+        return res.status(404).send({
 					message: `Votre Category id ${req.params.id} n'a pas été trouvé`
 				});
       }
       res.send(data)
-      console.log("Je suis data = "+category.product.title)
-        // res.status(200).json(category);
       })
-      .catch(
-      (error) => {
-        res.status(400).json({
-          error: error
-        });
-      }
-    );
+    .catch(
+    (error) => {
+      console.log(error)
+      return res.send({error: error})
+        
+    }
+  );
   };
 
   exports.getAllCategory = (req, res) => {

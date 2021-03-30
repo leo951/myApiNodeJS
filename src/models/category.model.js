@@ -7,7 +7,7 @@ const CategorySchema = new Schema({
         require: true,
         lowercase: true
     },
-    product:[{ 
+    products:[{ 
         type: Schema.Types.ObjectId, ref: 'Product'
     }]
 });
