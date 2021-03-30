@@ -1,3 +1,4 @@
+const { boolean } = require('joi');
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
@@ -19,6 +20,9 @@ const productSchema = new Schema({
         require: true,
         lowercase: true
     },
+	isFavorite: {
+		type: Boolean
+	},
     category: { 
         type: Schema.Types.ObjectId, ref: 'Category',
         require: true

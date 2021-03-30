@@ -12,6 +12,7 @@ exports.create = (req, res) => {
         description: req.body.description,
         imageUrl: req.body.imageUrl,
         price: req.body.price,
+        isFavorite: false,
         category: req.body.category
     });
 
@@ -77,7 +78,6 @@ exports.getAllProduct = (req, res) => {
 exports.getProduct = (req, res) => {
   Product.findOne({
     _id: req.params.id
-    // .populate('category')
   }).then(
     (product) => {
       res.status(200).json(product);
