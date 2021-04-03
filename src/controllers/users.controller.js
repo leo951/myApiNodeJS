@@ -12,7 +12,14 @@ exports.create = (req, res) => {
 	const user = new User({
 		firstname: req.body.firstname,
 		lastname: req.body.lastname,
+		phone: req.body.phone,
 		email: req.body.email,
+		adress: {
+			fullAddress: req.body.adress.fullAddress,
+			postalCode: req.body.adress.postalCode,
+			city: req.body.adress.city,
+			country: req.body.adress.country
+		},
 		password: hasedPassword,
 		isAdmin:  false
 	});
@@ -129,7 +136,14 @@ exports.createAdmin = (req, res) => {
 	const user = new User({
 		firstname: req.body.firstname,
 		lastname: req.body.lastname,
+		phone: req.body.phone,
 		email: req.body.email,
+		adress: {
+			fullAddress: req.body.adress.fullAddress,
+			postalCode: req.body.adress.postalCode,
+			city: req.body.adress.city,
+			country: req.body.adress.country
+		},
 		password: hasedPassword,
 		isAdmin: true 
 	});
@@ -167,10 +181,16 @@ exports.createAdmin = (req, res) => {
 exports.modifyUser = (req, res, next) => {
     const user = new User({
       _id: req.params.id,
-      lastname: req.body.lastName,
-      firstname: req.body.firstName,
+      lastname: req.body.lastname,
+      firstname: req.body.firstname,
       phone: req.body.phone,
       email: req.body.email,
+	  adress: {
+		fullAddress: req.body.fullAddress,
+		postalCode: req.body.postalCode,
+		city: req.body.city,
+		country: req.body.country
+	},
       password: req.body.password,
       isAdmin: req.body.IsAdmin,
     });

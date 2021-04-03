@@ -15,7 +15,4 @@ router.get('/category/:id', category.getCategoryProduct);
 router.post('/category/update/:id', category.modifyCategory);
 
 
-
-
-
 module.exports = router; 

@@ -1,9 +1,9 @@
 
 const Category = require('../models/category.model');
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-const Joi = require('joi');
-const { boolean } = require('joi');
+// const bcrypt = require('bcrypt');
+// const jwt = require('jsonwebtoken');
+// const Joi = require('joi');
+// const { boolean } = require('joi');
 
 const Product = require('../models/product.model');
 

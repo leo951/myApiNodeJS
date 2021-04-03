@@ -32,16 +32,20 @@ const userSchema = new Schema({
 	},
 	adress: {
 		fullAddress: {
-			type: String
+			type: String,
+			require: true
 		},
 		postalCode: {
-			type: Number
+			type: Number,
+			require: true
 		},
 		city: {
-			type: String
+			type: String,
+			require: true
 		},
 		country: {
-			type: String
+			type: String,
+			require: true
 		}
 	},
 
