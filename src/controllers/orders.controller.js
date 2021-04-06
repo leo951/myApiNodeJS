@@ -1,5 +1,6 @@
 const Order = require('../models/order.model');
 const User = require('../models/user.model');
+const Product = require('../models/product.model');
 exports.create = (req, res) => {
 	const order = new Order({
 		total: req.body.total,
@@ -10,7 +11,7 @@ exports.create = (req, res) => {
 	order
 		.save()
 		.then((data) => {
-			User.findByIdAndUpdate(req.body.user, { orders: data._id }).then(() => {
+			User.findByIdAndUpdate(req.body.user, { $push: {orders:data._id } }).then(() => {
 				res
 					.send({
 						data: data
@@ -34,7 +35,7 @@ exports.create = (req, res) => {
 exports.getOrder = (req, res) => {
 	Order.findById(req.params.id)
 		.populate('user')
-		.populate('produits')
+		.populate('products')
 		.then((data) => {
 			if (!data) {
 				res.status(404).send({
@@ -48,8 +49,8 @@ exports.getOrder = (req, res) => {
 
 exports.getOrders = (req, res) => {
 	Order.find()
-		.populate('user')
-		.populate('produits')
+		.populate('users')
+		.populate('products')
 		.then((orders) => {
 			res.status(200).json(orders);
 		})

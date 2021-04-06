@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const Joi = require('joi');
 const { boolean } = require('joi');
+const { getOrders } = require('./orders.controller');
 // const { populate } = require('../models/product.model');
 
 exports.create = (req, res) => {
@@ -19,6 +20,7 @@ exports.create = (req, res) => {
     product.save()
     .then((data) => {
       Category.findByIdAndUpdate(req.body.category, { $push: {product:data._id } })
+      Order.findByIdAndUpdate(req.body.orders, { $push: {product:data._id}})
       .then(() => {
 				res.send({
 						data: data

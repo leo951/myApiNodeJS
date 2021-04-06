@@ -86,13 +86,14 @@ exports.login = (req, res) => {
 
 exports.findOne = (req, res) => {
 	User.findById(req.params.id)
+	.populate('orders')
 		.then((data) => {
 			if (!data) {
 				res.status(404).send({
 					message: `Votre User id ${req.params.id} n'a pas été trouvé`
 				});
 			}
-			res.send(data);
+			return res.send(data);
 		})
 		.catch((err) => res.send(err));
 };
