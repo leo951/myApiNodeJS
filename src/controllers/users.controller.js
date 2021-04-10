@@ -57,7 +57,7 @@ exports.login = (req, res) => {
 	User.findOne({
 		email: req.body.email
 	})
-		.populate('orders')
+		// .populate('orders')
 		.then((data) => {
 			if (!data) {
 				return res.status(404).send({

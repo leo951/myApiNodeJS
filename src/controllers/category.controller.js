@@ -10,8 +10,8 @@ const Product = require('../models/product.model');
 
 exports.create = (req, res) => {
     const category = new Category({
-        title: req.body.title,
-        product: req.body.product
+      title:  req.body.title,
+      product: req.body.product
     });
     category
     .save()

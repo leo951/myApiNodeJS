@@ -20,7 +20,7 @@ exports.create = (req, res) => {
     product.save()
     .then((data) => {
       Category.findByIdAndUpdate(req.body.category, { $push: {product:data._id } })
-      Order.findByIdAndUpdate(req.body.orders, { $push: {product:data._id}})
+      // Order.findByIdAndUpdate(req.body.orders, { $push: {product:data._id}})
       .then(() => {
 				res.send({
 						data: data

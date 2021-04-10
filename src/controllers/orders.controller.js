@@ -4,6 +4,8 @@ const Product = require('../models/product.model');
 exports.create = (req, res) => {
 	const order = new Order({
 		total: req.body.total,
+		status: req.body.status,
+		date: req.body.date,
 		user: req.body.user,
 		products: req.body.products
 	});
