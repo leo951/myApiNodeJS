@@ -21,7 +21,7 @@ exports.create = (req, res) => {
 			country: req.body.adress.country
 		},
 		password: hasedPassword,
-		isAdmin:  false
+		isAdmin: false
 	});
 
 	user
@@ -161,7 +161,7 @@ exports.createAdmin = (req, res) => {
 			country: req.body.adress.country
 		},
 		password: hasedPassword,
-		isAdmin: true 
+		isAdmin: true
 	});
 
 	user
