@@ -19,6 +19,6 @@ router.get('/users/delete/:id', user.deleteUser);
 
 //import du middleware pour la verification de token
 router.get('/users/:id', verifyToken, user.findOne);
-router.get('/users/Admin/:id', verifyAdminToken, user.findOne)
+router.get('/users/admin/:id', verifyAdminToken, user.findOne)
 
 module.exports = router;

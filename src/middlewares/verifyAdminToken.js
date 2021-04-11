@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 
 function verifyAdminToken(req, res, next) {
     let tokenAdmin = req.headers.authorization;
-    // console.log(`Je suis tokenAdmin ${tokenAdmin}`);
+    console.log(`Je suis tokenAdmin ${tokenAdmin}`);
     if (!tokenAdmin) {
         return res.status(401).send({
             auth: false,
