@@ -13,6 +13,7 @@ router.get('/category/all', category.getAllCategory);
 //Paramettre toujour a la fin
 router.get('/category/:id', category.getCategoryProduct);
 router.post('/category/update/:id', category.modifyCategory);
+router.get('/category/delete/:id', category.deleteCategory);
 
 
 module.exports = router; 

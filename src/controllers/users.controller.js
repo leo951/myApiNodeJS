@@ -98,6 +98,21 @@ exports.findOne = (req, res) => {
 		.catch((err) => res.send(err));
 };
 
+exports.getUserAll = (req, res) => {
+	User.find()
+	.then(
+	  (Users) => {
+		res.status(200).json(Users);
+	  }
+	).catch(
+	  (error) => {
+		res.status(400).json({
+		  error: error
+		});
+	  }
+	);
+  };
+
 																// Partie Admin
 exports.loginAdmin = (req, res) => {
 	User.findOne({

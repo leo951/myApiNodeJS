@@ -1,6 +1,7 @@
 const Order = require('../models/order.model');
 const User = require('../models/user.model');
 const Product = require('../models/product.model');
+
 exports.create = (req, res) => {
 	const order = new Order({
 		total: req.body.total,
@@ -51,7 +52,7 @@ exports.getOrder = (req, res) => {
 
 exports.getOrders = (req, res) => {
 	Order.find()
-		.populate('users')
+		.populate('user')
 		.populate('products')
 		.then((orders) => {
 			res.status(200).json(orders);

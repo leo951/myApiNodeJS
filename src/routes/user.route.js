@@ -8,6 +8,8 @@ const addUserValidation = require('../middlewares/validators/users.validator');
 const addUserRoleValidation = require('../middlewares/validators/users.role.validator')
 
 router.post('/users', addUserValidation, user.create);
+router.get('/usersAll', user.getUserAll);
+
 router.post('/users/admin', addUserRoleValidation, user.createAdmin) 
 router.post('/users/login', user.login);
 router.post('/users/loginAdmin', user.loginAdmin);
