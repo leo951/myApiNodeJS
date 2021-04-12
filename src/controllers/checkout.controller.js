@@ -21,7 +21,7 @@ exports.checkout = async (req, res) => {
       },
     ],
     mode: 'payment',
-    success_url: 'http://localhost:8080/orders',
+    success_url: 'http://localhost:8080/#/orders',
     cancel_url: 'http://localhost:8080/cancel',
   });
 

@@ -67,8 +67,9 @@ exports.getOrders = (req, res) => {
 
 exports.modifyOrder = (req, res, next) => {
     const order = new Order({
-     status: req.body.status
-        });
+		_id: req.params.id,
+     	status: req.body.status
+    });
     Order.updateOne({_id: req.params.id}, order)
     .then(
       (data) => {

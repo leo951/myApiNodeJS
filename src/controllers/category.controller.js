@@ -11,12 +11,12 @@ const Product = require('../models/product.model');
 exports.create = (req, res) => {
     const category = new Category({
       title:  req.body.title,
-      product: req.body.product
+      products: req.body.product
     });
     category
     .save()
     .then((data) => {
-      Product.findByIdAndUpdate(req.body.product, { category: data._id })
+      Product.findByIdAndUpdate(req.body.products, { $push: {category:data._id } })
       .then(() => {
 				res
 					.send({
