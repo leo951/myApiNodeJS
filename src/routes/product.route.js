@@ -13,7 +13,7 @@ router.get('/products/all', product.getAllProduct);
 router.get('/products/:id', product.getProduct);
 
 //isAdmin
-router.post('/products/update/:id',verifyAdminToken, product.modifyProduct);
-router.get('/products/delete/:id',verifyAdminToken, product.deleteProduct);
+router.post('/products/update/:id', product.modifyProduct);
+router.get('/products/delete/:id', product.deleteProduct);
 
 module.exports = router; 
